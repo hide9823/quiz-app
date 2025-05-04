@@ -44,4 +44,4 @@ def quiz():
     return render_template("quiz.html", question=questions[index], index=index + 1, total=len(questions))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(host='0.0.0.0', port=10000)
