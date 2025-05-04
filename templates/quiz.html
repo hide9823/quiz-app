@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>問題 {{ index }}/{{ total }}</title>
+</head>
+<body>
+    <h2>Q{{ index }}: {{ question["question"] }}</h2>
+    <form method="post">
+        {% for choice in question["choices"] %}
+            <input type="radio" name="answer" value="{{ choice }}" required> {{ choice }}<br>
+        {% endfor %}
+        <button type="submit">次へ</button>
+    </form>
+</body>
+</html>

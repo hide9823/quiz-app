@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>ビジキャリ3級 過去問</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>ビジキャリ3級 生産管理 過去問</h1>
+    <form method="post" action="/start_quiz">
+        <button type="submit" name="year" value="2022">2022年</button>
+        <button type="submit" name="year" value="random">ランダム40問</button>
+    </form>
+</body>
+</html>
