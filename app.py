@@ -1,6 +1,7 @@
 from flask import Flask, render_template, request, redirect, url_for, session
 import json
 import random
+import os
 
 app = Flask(__name__)
 app.secret_key = "secret"
@@ -44,4 +45,5 @@ def quiz():
     return render_template("quiz.html", question=questions[index], index=index + 1, total=len(questions))
 
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port=10000)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
