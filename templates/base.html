@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- サーチエンジンのインデックス／リンク追跡を禁止 -->
+  <meta name="robots" content="noindex, nofollow">
   <title>{% block title %}ビジキャリ{% endblock %}</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
