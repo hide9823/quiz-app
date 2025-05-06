@@ -1,15 +1,43 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>問題 {{ index }}/{{ total }}</title>
-</head>
-<body>
-    <h2>Q{{ index }}: {{ question["question"] }}</h2>
+{% extends "base.html" %}
+{% block title %}問題 {{ number }} / {{ total }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <!-- 進捗バー -->
+  <div class="progress">
+    <div class="progress-bar"
+         style="width: {{ (number-1) / total * 100 }}%;">
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>Q{{ number }}: {{ question.question_text }}</h2>
+    {% if question.image %}
+      <img src="{{ url_for('static', filename='images/' + question.image) }}" alt="">
+    {% endif %}
     <form method="post">
-        {% for choice in question["choices"] %}
-            <input type="radio" name="answer" value="{{ choice }}" required> {{ choice }}<br>
-        {% endfor %}
-        <button type="submit">次へ</button>
+      {% for key, text in question.choices.items() %}
+        <label>
+          <input type="radio" name="answer" value="{{ key }}" required>
+          {{ key }}. {{ text }}
+        </label>
+      {% endfor %}
+      <button type="submit" class="btn btn-primary">回答</button>
     </form>
-</body>
-</html>
+
+    <a href="{{ url_for('index') }}" class="btn btn-interrupt">中断してトップへ</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  localStorage.setItem("quizProgress", JSON.stringify({
+    filename: "{{ session.get('filename','') }}",
+    index: {{ session.get('index', 0) }},
+    score: {{ session.get('score', 0) }}
+  }));
+});
+</script>
+{% endblock %}

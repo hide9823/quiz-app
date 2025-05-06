@@ -1,53 +1,86 @@
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ビジキャリ3級 過去問</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    <style>
-        body {
-            font-family: sans-serif;
-            padding: 20px;
-            margin: 0;
-            background-color: #f7f7f7;
-            text-align: center;
-        }
+{% extends "base.html" %}
+{% block title %}トップ | ビジキャリ{% endblock %}
 
-        h1 {
-            font-size: 1.8em;
-            margin-bottom: 1em;
-        }
-
-        button {
-            font-size: 1.2em;
-            padding: 1em 2em;
-            margin: 1em;
-            border: none;
-            border-radius: 8px;
-            background-color: #007bff;
-            color: white;
-            cursor: pointer;
-            width: 80%;
-            max-width: 300px;
-        }
-
-        button:hover {
-            background-color: #0056b3;
-        }
-
-        form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-    </style>
-</head>
-<body>
+{% block content %}
+<div class="container">
+  <div class="card">
     <h1>ビジキャリ3級 生産管理 過去問</h1>
-    <form method="post" action="/start_quiz">
-        <button type="submit" name="year" value="2022">2022年</button>
-        <button type="submit" name="year" value="random">ランダム40問</button>
+
+    <form method="post" action="{{ url_for('start_quiz') }}" class="form-grid">
+      <div class="form-row">
+        <label for="year">年度：</label>
+        <select name="year" id="year" required>
+          <option value="" disabled selected>選択してください</option>
+          <option value="2022">2022年</option>
+          <option value="2023">2023年</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="type">種類：</label>
+        <select name="type" id="type" required>
+          <option value="" disabled selected>選択してください</option>
+          <option value="planning">プランニング</option>
+          <option value="operation">オペレーション</option>
+        </select>
+      </div>
+      <div class="form-row">
+        <label for="period">期：</label>
+        <select name="period" id="period" required>
+          <option value="" disabled selected>選択してください</option>
+          <option value="first">前期</option>
+          <option value="second">後期</option>
+        </select>
+      </div>
+      <button type="submit" class="btn btn-primary">開始</button>
     </form>
-</body>
-</html>
+
+    <hr>
+
+    <form method="post" action="{{ url_for('random_quiz') }}">
+      <button type="submit" class="btn btn-secondary">ランダム40問</button>
+    </form>
+
+    <form id="resumeForm" method="post" action="{{ url_for('start_quiz') }}" style="display:none; margin-top:12px;">
+      <input type="hidden" name="resume" value="1">
+      <input type="hidden" name="year"       id="resumeYear">
+      <input type="hidden" name="type"       id="resumeType">
+      <input type="hidden" name="period"     id="resumePeriod">
+      <input type="hidden" name="resume_index" id="resumeIndex">
+      <input type="hidden" name="resume_score" id="resumeScore">
+      <button type="submit" class="btn btn-interrupt">途中から再開</button>
+    </form>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  const raw = localStorage.getItem("quizProgress");
+  if (!raw) return;
+  const prog = JSON.parse(raw);
+
+  if (prog.filename) {
+    // 解説を見た直後なら index を +1 して次問から再開
+    let resumeIdx = prog.index;
+    if (prog.viewedAnswer) {
+      resumeIdx = prog.index + 1;
+      delete prog.viewedAnswer;
+      localStorage.setItem("quizProgress", JSON.stringify(prog));
+    }
+
+    // ファイル名 → year/type/period に分解
+    const parts = prog.filename.replace(/\.json$/,"").split("_");
+    if (parts.length === 3) {
+      const [y, t, p] = parts;
+      document.getElementById("resumeYear"  ).value = y;
+      document.getElementById("resumeType"  ).value = t;
+      document.getElementById("resumePeriod").value = p;
+      document.getElementById("resumeIndex" ).value = resumeIdx;
+      document.getElementById("resumeScore" ).value = prog.score;
+      document.getElementById("resumeForm").style.display = "block";
+    }
+  }
+});
+</script>
+{% endblock %}

@@ -1,0 +1,167 @@
+/* ====== ベース設定 ====== */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: sans-serif;
+  background-color: #f0f2f5;
+  color: #333;
+}
+
+/* ====== コンテナ ====== */
+.container {
+  max-width: 500px;
+  margin: 0 auto;
+  padding: 16px;
+  box-sizing: border-box;
+}
+
+/* ====== カード ====== */
+.card {
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 24px;
+  margin-bottom: 16px;
+}
+
+/* カード内の主要見出しは単語内改行しない */
+.card h1 {
+  /* 単語中の改行を禁止 */
+  word-break: keep-all;
+  /* もし横幅を超えそうなら強制的に折り返す(日本語の場合はこちらが効きやすい) */
+  white-space: normal;
+}
+
+/* ====== フォームグリッド ====== */
+.form-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 12px;
+  margin-bottom: 16px;
+}
+
+/* ラベル＋入力を横並びに */
+.form-row {
+  display: flex;
+  align-items: center;
+}
+
+.form-row label {
+  width: 70px;
+  margin-right: 8px;
+  font-weight: bold;
+}
+
+.form-row select {
+  flex: 1;
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+/* ====== 選択肢スタイル ====== */
+.card label {
+  display: flex;
+  align-items: center;
+  padding: 8px 0;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.card input[type="radio"] {
+  margin-right: 8px;
+  width: 18px;
+  height: 18px;
+}
+
+/* ====== ボタン ====== */
+.btn {
+  display: block;
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  text-align: center;
+  margin-top: 8px;
+}
+
+.btn-primary {
+  background-color: #28a745;
+  color: #fff;
+}
+
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  width: auto;              /* 自動幅に戻す */
+  padding: 10px 16px;       /* ボタン内余白を横長に */
+  min-width: 160px;         /* 最低でもこれだけは確保 */
+  margin: 8px auto 0;       /* 上マージン、左右中央寄せ */
+  display: block;           /* ブロック要素にして中央寄せを有効化 */
+  text-align: center;
+}
+
+/* ====== 解説カード ====== */
+.answer-card {
+  background-color: #f8f9fa;
+  border-left: 4px solid #28a745;
+  padding: 16px;
+  margin-bottom: 16px;
+}
+
+/* ====== 画像レスポンシブ ====== */
+img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+}
+
+/* ====== レスポンシブ調整 ====== */
+@media (max-width: 360px) {
+  .card h1, .card h2 { font-size: 1.1rem; }
+  .form-row select { font-size: 0.95rem; }
+  .card label { font-size: 0.95rem; }
+  .btn { padding: 10px; font-size: 0.95rem; }
+}
+
+/* 進捗バー */
+.progress {
+  background-color: #e9ecef;
+  border-radius: 4px;
+  overflow: hidden;
+  height: 8px;
+  margin-bottom: 16px;
+}
+
+.progress-bar {
+  background-color: #28a745;
+  height: 100%;
+  transition: width 0.3s ease;
+}
+
+/* ランダムボタン用（二次アクション）＝全幅 */
+.btn-secondary {
+  background-color: #6c757d;
+  color: #fff;
+  width: 100%;
+  margin-top: 8px;
+}
+
+/* 中断/再開用ボタン＝小さめ＆中央寄せ */
+.btn-interrupt {
+  background-color: #28a745;
+  color: #fff;
+  width: auto !important;     /* 全幅指定を強制的に解除 */
+  padding: 10px 16px;
+  min-width: 160px;
+  margin: 8px auto 0;
+  display: block;
+  text-align: center;
+  border-radius: 6px;
+  cursor: pointer;
+  border: none;
+  font-size: 1rem;
+}

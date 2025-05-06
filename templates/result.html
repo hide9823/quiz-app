@@ -1,10 +1,19 @@
-<!DOCTYPE html>
-<html>
-<head>
-    <title>結果</title>
-</head>
-<body>
-    <h2>スコア: {{ score }}/{{ total }}</h2>
-    <a href="/">トップに戻る</a>
-</body>
-</html>
+{% extends "base.html" %}
+{% block title %}結果 | ビジキャリ{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="card">
+    <h2>結果</h2>
+    <p>あなたのスコア：{{ score }} / {{ total }}</p>
+    <a href="{{ url_for('index') }}" class="btn btn-primary">トップへ戻る</a>
+  </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+  // 終了後は localStorage の進捗を削除
+  localStorage.removeItem("quizProgress");
+</script>
+{% endblock %}

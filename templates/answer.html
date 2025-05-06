@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+{% block title %}解答 {{ number }} / {{ total }}{% endblock %}
+
+{% block content %}
+<div class="container">
+  <!-- 進捗バー -->
+  <div class="progress">
+    <div class="progress-bar"
+         style="width: {{ (number) / total * 100 }}%;">
+    </div>
+  </div>
+  <div class="card">
+    <h2>Q{{ number }} 解答</h2>
+    <p>
+      あなたの回答：
+      <strong>{{ selected }}. {{ question.choices[selected] }}</strong><br>
+      {% if correct %}
+        <span style="color:green;">正解！</span>
+      {% else %}
+        <span style="color:red;">不正解…</span><br>
+        正解：
+        <strong>{{ question.answer }}. {{ question.choices[question.answer] }}</strong>
+      {% endif %}
+    </p>
+  </div>
+
+  <div class="answer-card">
+    <h3>解説</h3>
+    <p>{{ question.explanation }}</p>
+  </div>
+
+  <form id="nextForm" method="post" action="{{ url_for('answer_next') }}">
+    <button type="submit" class="btn btn-primary">次へ</button>
+  </form>
+  <a href="{{ url_for('index') }}" class="btn btn-interrupt">中断してトップへ</a>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+  // 解説を見たフラグを立てる
+  const prog = {
+    filename: "{{ session.get('filename','') }}",
+    index: {{ session.get('index', 0) }},
+    score: {{ session.get('score', 0) }},
+    viewedAnswer: true
+  };
+  localStorage.setItem("quizProgress", JSON.stringify(prog));
+});
+</script>
+{% endblock %}
