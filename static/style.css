@@ -63,16 +63,18 @@ body {
 /* ====== 選択肢スタイル ====== */
 .card label {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
+  gap: 10px;
   padding: 8px 0;
   font-size: 1rem;
   cursor: pointer;
 }
 
 .card input[type="radio"] {
-  margin-right: 8px;
+  flex: none;
   width: 18px;
   height: 18px;
+  margin-top: 4px;
 }
 
 /* ====== ボタン ====== */
@@ -123,7 +125,14 @@ img {
 @media (max-width: 360px) {
   .card h1, .card h2 { font-size: 1.1rem; }
   .form-row select { font-size: 0.95rem; }
-  .card label { font-size: 0.95rem; }
+  .card label {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 8px 0;
+  font-size: 1rem;
+  cursor: pointer;
+}
   .btn { padding: 10px; font-size: 0.95rem; }
 }
 
